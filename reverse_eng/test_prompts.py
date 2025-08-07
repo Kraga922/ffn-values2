@@ -7,7 +7,8 @@ model_type = 'llama'
 if model_type == 'llama':
     # model_id = "meta-llama/Meta-Llama-3.1-8B-Instruct"
     # model_id = "meta-llama/Meta-Llama-3-70B-Instruct"
-    model_id = "unsloth/Llama-3.3-70B-Instruct-bnb-4bit"
+    # model_id = "unsloth/Llama-3.3-70B-Instruct-bnb-4bit"
+    model_id = "openai/gpt-oss-20b"
     # model_id = "google/gemma-2-2b"
     
     
@@ -19,7 +20,11 @@ if model_type == 'llama':
     language_model = AutoModelForCausalLM.from_pretrained(
         model_id,
         device_map="auto",
-        torch_dtype=torch.float16,
+        # torch_dtype=torch.float16,
+
+        #for openai/gpt-oss-20b
+        torch_dtype=torch.bfloat16
+
     )
 
     # Create a pipeline for text generation
@@ -28,7 +33,10 @@ if model_type == 'llama':
         model=language_model,
         tokenizer=tokenizer,
         device_map="auto",
-        torch_dtype=torch.float16
+        # torch_dtype=torch.float16
+
+        #for openai/gpt-oss-20b
+        torch_dtype=torch.bfloat16
     )
 
     # Prompt input loop
